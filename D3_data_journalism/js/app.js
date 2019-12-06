@@ -22,7 +22,7 @@ var svg = chart.append("svg")
     .attr("width", svgWidth)
     .attr("height", svgHeight);
 
-// Append a group area with it's area inside the margins set above
+// Append a group area inside the margins set above
 var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);  
     
@@ -100,7 +100,8 @@ function renderText(textGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
     return textGroup;
 }  //ends renderText function
 
-// Function to add units for each x-axis category (using tooltips)
+// Function to add units for each category in the hover box (using tooltips)
+// ...not needed for y because they're all % and put directly into toolTip function
 function styleX(value, chosenXAxis) {
 
     // Use percent for poverty
@@ -158,7 +159,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 
     circlesGroup.call(toolTip);
 
-    //add events
+    // Add event for hovering over a circle
     circlesGroup.on("mouseover", toolTip.show)
     .on("mouseout", toolTip.hide);
 
@@ -273,7 +274,7 @@ d3.csv("../data/data.csv").then(function(censusData) {
         .attr("dy", "1em")
         .attr("transform", "rotate(-90)")
         .attr("value", "smokes")
-        .text("Smokes (%)");
+        .text("Smokers (%)");
 
     var obesityLabel = yLabelsGroup.append("text")
         .classed("aText", true)
@@ -285,7 +286,8 @@ d3.csv("../data/data.csv").then(function(censusData) {
         .attr("value", "obesity")
         .text("Obese (%)");    
         
-
+    // UpdateToolTip function with data
+    var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
     // X-axis labels event listener
     xLabelsGroup.selectAll("text")
