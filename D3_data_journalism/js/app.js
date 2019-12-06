@@ -29,3 +29,10 @@ var chartGroup = svg.append("g")
 // Set initial parameters
 var chosenXAxis = "poverty";
 var chosenYAxis = "healthcare";    
+
+// Load data from data.csv
+d3.csv("../data/data.csv").then(function(milesData) {
+
+    // Print data.csv
+    console.log(milesData)
+});
