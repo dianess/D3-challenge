@@ -76,6 +76,30 @@ function renderAxesY(newYScale, yAxis) {
     return yAxis;
 }
 
+// renderCirlces function for updating circles group with a transition
+// to new circles for change in x axis or y axis
+function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
+
+    circlesGroup.transition()
+        .duration(1000)
+        .attr("cx", data => newXScale(data[chosenXAxis]))
+        .attr("cy", data => newYScale(data[chosenYAxis]));
+
+    return circlesGroup;
+}
+
+// renderText function for updating state labels with a transition
+// for change in x axis or y axis
+function renderText(textGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
+
+    textGroup.transition()
+        .duration(1000)
+        .attr("x", d => newXScale(d[chosenXAxis]))
+        .attr("y", d => newYScale(d[chosenYAxis]));
+
+    return textGroup;
+}
+
 // Load data from data.csv
 d3.csv("../data/data.csv").then(function(censusData) {
 
@@ -194,7 +218,30 @@ d3.csv("../data/data.csv").then(function(censusData) {
         .attr("dy", "1em")
         .attr("transform", "rotate(-90)")
         .attr("value", "obesity")
-        .text("Obese (%)");            
+        .text("Obese (%)");    
+        
+    // X-axis labels event listener
+    xLabelsGroup.selectAll("text")
+        .on("click", function() {
+            //get value of selection
+            var value = d3.select(this).attr("value");
 
+            //check if value is same as current axis
+            if (value != chosenXAxis) {
+                console.log(value);
+            }  // ends if statement
+        })    // ends x "click"
+
+    // X-axis labels event listener
+    yLabelsGroup.selectAll("text")
+        .on("click", function() {
+            //get value of selection
+            var value = d3.select(this).attr("value");
+
+            //check if value is same as current axis
+            if (value != chosenYAxis) {
+                console.log(value);
+            }  // ends if statement
+        })    // ends y "click"    
 });    // ends d3.csv read       
 
