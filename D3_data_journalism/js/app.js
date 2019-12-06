@@ -236,13 +236,13 @@ d3.csv("../data/data.csv").then(function(censusData) {
                 // Update xScale for new data
                 xLinearScale = xScale(censusData, chosenXAxis);
 
-                //update xAxis with transition
+                // Update xAxis with transition
                 xAxis = renderAxesX(xLinearScale, xAxis);
 
-                //update circles with new x values
+                // Update circles with new x values
                 circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
 
-                //update text with new x values
+                // Update text with new x values
                 textGroup = renderText(textGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
             
             }  // ends if statement
@@ -257,6 +257,22 @@ d3.csv("../data/data.csv").then(function(censusData) {
             //check if value is same as current axis
             if (value != chosenYAxis) {
                 console.log(value);
+
+            // Replace chosenYAxis with value
+            chosenYAxis = value;
+
+            // Update yScale for new data
+            yLinearScale = yScale(censusData, chosenYAxis);
+
+            // Update yAxis with transition
+            yAxis = renderAxesY(yLinearScale, yAxis);
+
+            // Update circles with new y values
+            circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+
+            // Update text with new y values
+            textGroup = renderText(textGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+
             }  // ends if statement
         })    // ends y "click"    
 });    // ends d3.csv read       
