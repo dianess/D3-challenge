@@ -229,6 +229,22 @@ d3.csv("../data/data.csv").then(function(censusData) {
             //check if value is same as current axis
             if (value != chosenXAxis) {
                 console.log(value);
+
+                // Replace chosenXAxis with value
+                chosenXAxis = value;
+
+                // Update xScale for new data
+                xLinearScale = xScale(censusData, chosenXAxis);
+
+                //update xAxis with transition
+                xAxis = renderAxesX(xLinearScale, xAxis);
+
+                //update circles with new x values
+                circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+
+                //update text with new x values
+                textGroup = renderText(textGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+            
             }  // ends if statement
         })    // ends x "click"
 
