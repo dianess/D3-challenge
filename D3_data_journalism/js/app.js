@@ -52,6 +52,30 @@ function yScale(censusData, chosenYAxis) {
     return yLinearScale;
 }
 
+// renderAxesX function for updating xAxis with new information
+function renderAxesX(newXScale, xAxis) {
+    var bottomAxis = d3.axisBottom(newXScale);
+
+    // Include transition on page load
+    xAxis.transition()
+        .duration(1000)
+        .call(bottomAxis);
+
+    return xAxis;
+}
+
+// renderAxesY function for updating yAxis with new information
+function renderAxesY(newYScale, yAxis) {
+    var leftAxis = d3.axisLeft(newYScale);
+
+    // Include transition on page load
+    yAxis.transition()
+        .duration(1000)
+        .call(leftAxis);
+
+    return yAxis;
+}
+
 // Load data from data.csv
 d3.csv("../data/data.csv").then(function(censusData) {
 
@@ -67,5 +91,25 @@ d3.csv("../data/data.csv").then(function(censusData) {
         data.obesity = +data.obesity;
         data.smokes = +data.smokes;
     })  //ends parsing data
-});    // ends d3.csv read
+
+        // Create first linear scales
+        var xLinearScale = xScale(censusData, chosenXAxis);
+        var yLinearScale = yScale(censusData, chosenYAxis);
+
+        // Create initial axes
+        var bottomAxis = d3.axisBottom(xLinearScale);
+        var leftAxis = d3.axisLeft(yLinearScale);
+
+        // Append xAxis
+        var xAxis = chartGroup.append("g")
+        .classed("x-axis", true)
+        .attr("transform", `translate(0, ${height})`)
+        .call(bottomAxis);
+
+        // Append yAxis
+        var yAxis = chartGroup.append("g")
+        .classed("y-axis", true)
+        .call(leftAxis);
+
+});    // ends d3.csv read       
 
