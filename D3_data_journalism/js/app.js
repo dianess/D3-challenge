@@ -62,7 +62,7 @@ function renderAxesX(newXScale, xAxis) {
         .call(bottomAxis);
 
     return xAxis;
-}
+}  //ends renderAxesX function
 
 // renderAxesY function for updating yAxis with new information
 function renderAxesY(newYScale, yAxis) {
@@ -74,7 +74,7 @@ function renderAxesY(newYScale, yAxis) {
         .call(leftAxis);
 
     return yAxis;
-}
+}  //ends renderAxesY function
 
 // renderCirlces function for updating circles group with a transition
 // to new circles for change in x axis or y axis
@@ -86,7 +86,7 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYA
         .attr("cy", data => newYScale(data[chosenYAxis]));
 
     return circlesGroup;
-}
+}   //ends renderCircles function
 
 // renderText function for updating state labels with a transition
 // for change in x axis or y axis
@@ -98,6 +98,71 @@ function renderText(textGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
         .attr("y", d => newYScale(d[chosenYAxis]));
 
     return textGroup;
+}  //ends renderText function
+
+// Function to add units for each x-axis category (using tooltips)
+function styleX(value, chosenXAxis) {
+
+    // Use percent for poverty
+    if (chosenXAxis === 'poverty') {
+        return `${value}%`;
+    }
+    // Use U.S. dollars for household income
+    else if (chosenXAxis === 'income') {
+        return `$${value}`;
+    }
+    // Use a number for age
+    else {
+        return `${value}`;
+    }
+}
+
+// Function for updating circles group with new tooltip
+function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
+
+    // Select x-label
+    // Poverty
+    if (chosenXAxis === 'poverty') {
+        var xLabel = "Poverty:";
+    }
+    // Household income (Median)
+    else if (chosenXAxis === 'income') {
+        var xLabel = "Median Income:";
+    }
+    // Age
+    else {
+        var xLabel = "Age:";
+    }
+
+    // Select y-label
+    // Lacking healthcare
+    if (chosenYAxis === 'healthcare') {
+        var yLabel = "No Healthcare:"
+    }
+    // Obesity
+    else if (chosenYAxis === 'obesity') {
+        var yLabel = "Obesity:"
+    }
+    // Smokers
+    else {
+        var yLabel = "Smokers:"
+    }
+
+    // Create tooltip
+    var toolTip = d3.tip()
+        .attr("class", "d3-tip")
+        .offset([-8, 0])
+        .html(function(d) {
+            return (`${d.state}<br>${xLabel} ${styleX(d[chosenXAxis], chosenXAxis)}<br>${yLabel} ${d[chosenYAxis]}%`);
+        });
+
+    circlesGroup.call(toolTip);
+
+    //add events
+    circlesGroup.on("mouseover", toolTip.show)
+    .on("mouseout", toolTip.hide);
+
+    return circlesGroup;
 }
 
 // Load data from data.csv
@@ -220,6 +285,8 @@ d3.csv("../data/data.csv").then(function(censusData) {
         .attr("value", "obesity")
         .text("Obese (%)");    
         
+
+
     // X-axis labels event listener
     xLabelsGroup.selectAll("text")
         .on("click", function() {
@@ -245,6 +312,27 @@ d3.csv("../data/data.csv").then(function(censusData) {
                 // Update text with new x values
                 textGroup = renderText(textGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
             
+                // Update tooltips with new info
+                circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+                
+                // Change classes to change x-axis labels to/from bold text,
+                // depending which label was clicked
+                if (chosenXAxis === "poverty") {
+                    povertyLabel.classed("active", true).classed("inactive", false);
+                    ageLabel.classed("active", false).classed("inactive", true);
+                    incomeLabel.classed("active", false).classed("inactive", true);
+                }
+                else if (chosenXAxis === "age") {
+                    povertyLabel.classed("active", false).classed("inactive", true);
+                    ageLabel.classed("active", true).classed("inactive", false);
+                    incomeLabel.classed("active", false).classed("inactive", true);
+                }
+                else {
+                    povertyLabel.classed("active", false).classed("inactive", true);
+                    ageLabel.classed("active", false).classed("inactive", true);
+                    incomeLabel.classed("active", true).classed("inactive", false);
+                }
+
             }  // ends if statement
         })    // ends x "click"
 
@@ -272,6 +360,8 @@ d3.csv("../data/data.csv").then(function(censusData) {
 
             // Update text with new y values
             textGroup = renderText(textGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+
+
 
             }  // ends if statement
         })    // ends y "click"    
