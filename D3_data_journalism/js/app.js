@@ -333,7 +333,7 @@ d3.csv("../data/data.csv").then(function(censusData) {
                     incomeLabel.classed("active", true).classed("inactive", false);
                 }
 
-            }  // ends if statement
+            }  // ends "if value != chosenXAxis" statement
         })    // ends x "click"
 
     // X-axis labels event listener
@@ -361,9 +361,28 @@ d3.csv("../data/data.csv").then(function(censusData) {
             // Update text with new y values
             textGroup = renderText(textGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
 
+            // Update tooltips with new info
+            circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
+            // Change classes to change y-axis labels to/from bold text,
+            // depending which label was clicked
+            if (chosenYAxis === "obesity") {
+                obesityLabel.classed("active", true).classed("inactive", false);
+                smokesLabel.classed("active", false).classed("inactive", true);
+                healthcareLabel.classed("active", false).classed("inactive", true);
+            }
+            else if (chosenYAxis === "smokes") {
+                obesityLabel.classed("active", false).classed("inactive", true);
+                smokesLabel.classed("active", true).classed("inactive", false);
+                healthcareLabel.classed("active", false).classed("inactive", true);
+            }
+            else {
+                obesityLabel.classed("active", false).classed("inactive", true);
+                smokesLabel.classed("active", false).classed("inactive", true);
+                healthcareLabel.classed("active", true).classed("inactive", false);
+            }
 
-            }  // ends if statement
+            }  // ends "if value != chosenYAxis" statement
         })    // ends y "click"    
 });    // ends d3.csv read       
 
