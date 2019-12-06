@@ -13,3 +13,11 @@ var margin = {
 // Define dimensions of the chart area
 var width = svgWidth - margin.left - margin.right;
 var height = svgHeight - margin.top - margin.bottom; 
+
+// Append a div classed chart to the scatter id named in html
+var chart = d3.select("#scatter").append("div").classed("chart", true);
+
+// Append an SVG element to the chart with appropriate height and width
+var svg = chart.append("svg")
+    .attr("width", svgWidth)
+    .attr("height", svgHeight);
