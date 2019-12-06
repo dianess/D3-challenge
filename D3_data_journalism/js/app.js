@@ -31,8 +31,18 @@ var chosenXAxis = "poverty";
 var chosenYAxis = "healthcare";    
 
 // Load data from data.csv
-d3.csv("../data/data.csv").then(function(milesData) {
+d3.csv("../data/data.csv").then(function(censusData) {
 
     // Print data.csv
-    console.log(milesData)
-});
+    console.log(censusData)
+
+    //parse data
+    censusData.forEach(function(data) {
+        data.poverty = +data.poverty;
+        data.age = +data.age;
+        data.income = +data.income;
+        data.healthcare = +data.healthcare;
+        data.obesity = +data.obesity;
+        data.smokes = +data.smokes;
+    })  //ends parsing data
+});    // ends d3.csv read
