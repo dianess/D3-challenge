@@ -28,7 +28,29 @@ var chartGroup = svg.append("g")
     
 // Set initial parameters
 var chosenXAxis = "poverty";
-var chosenYAxis = "healthcare";    
+var chosenYAxis = "healthcare";  
+
+// xScale function for updating x-scale when clicking on axis label
+function xScale(censusData, chosenXAxis) {
+    // Create scales
+    var xLinearScale = d3.scaleLinear()
+        .domain([d3.min(censusData, d => d[chosenXAxis]) * 0.8,
+            d3.max(censusData, d => d[chosenXAxis]) * 1.2])
+        .range([0, width]);
+
+    return xLinearScale;
+}
+
+// yScale function for updating y-scale upon clicking on axis label
+function yScale(censusData, chosenYAxis) {
+    // Create scales
+    var yLinearScale = d3.scaleLinear()
+        .domain([d3.min(censusData, d => d[chosenYAxis]) * 0.8,
+            d3.max(censusData, d => d[chosenYAxis]) * 1.2])
+        .range([height, 0]);
+
+    return yLinearScale;
+}
 
 // Load data from data.csv
 d3.csv("../data/data.csv").then(function(censusData) {
@@ -46,3 +68,4 @@ d3.csv("../data/data.csv").then(function(censusData) {
         data.smokes = +data.smokes;
     })  //ends parsing data
 });    // ends d3.csv read
+
