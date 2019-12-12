@@ -167,7 +167,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 }
 
 // Load data from data.csv
-d3.csv("../data/data.csv").then(function(censusData) {
+d3.csv("../D3_data_journalism/data/data.csv").then(function(censusData) {
 
     // Print data.csv
     //console.log(censusData)  // it works!
