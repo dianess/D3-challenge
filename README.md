@@ -4,6 +4,6 @@ I used JavaScript and d3 tooltips to create a dynamic chart. The display shows a
 This scatter plot is displaying the data by U.S. states. The state abbreviations appear on the circles of the scatter plot, and when the user hovers over the circle, a box pops up containing data for the chosen axes.
 
 
-Data Source: https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml based on 2014 ACS 1-year estimates. The data set includes rates of income, obesity, smoking, healthcare, and poverty by state.
+Data Source: [Census Data](https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml) based on 2014 ACS 1-year estimates. The data set includes rates of income, obesity, smoking, healthcare, and poverty by state.
 
 
