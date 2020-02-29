@@ -9,7 +9,7 @@ Chart with the percent of people in poverty on the x-axis and the percent who la
 <img src="/Resources/D3-Times-chart.png" alt="D3 Times Chart">
 
 Notice how the axes scales change when the user clicks on different x- and y-axis options. This chart shows median household income on the x-axis and the percent of people who smoke on the y-axis.
-<img src="/Resources/D3-Times-image2.png" alt="D3 Times chart income and smokers">
+<img src="/Resources/D3-Times-chart2.png" alt="D3 Times chart income and smokers">
 
 Data Source: [Census Data](https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml). 
 The data is based on 2014 ACS 1-year estimates and includes rates of income, obesity, smoking, healthcare, and poverty by state.
